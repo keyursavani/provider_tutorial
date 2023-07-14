@@ -3,11 +3,14 @@ import 'package:provider/provider.dart';
 import 'package:untitled1/provider/count_provider.dart';
 import 'package:untitled1/provider/example_one_provider.dart';
 import 'package:untitled1/provider/favourite_item_provider.dart';
+import 'package:untitled1/provider/login_provider.dart';
 import 'package:untitled1/provider/them_changer_provider.dart';
 import 'package:untitled1/screen/counter_example_screen.dart';
 import 'package:untitled1/screen/example_one_screen.dart';
 import 'package:untitled1/screen/favourite_item_screen.dart';
+import 'package:untitled1/screen/login_screen.dart';
 import 'package:untitled1/screen/them_chnager_screen.dart';
+import 'package:untitled1/screen/valur_notify_listner_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -38,11 +41,13 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ExampleOneProvider()),
         ChangeNotifierProvider(create: (_) => FavouriteItemProvider()),
         ChangeNotifierProvider(create: (_) => ThemChangerProvider()),
+        ChangeNotifierProvider(create: (_) => LoginProvider()),
       ],
       child:Builder(
         builder: (BuildContext context){
           final themChanger = Provider.of<ThemChangerProvider>(context);
           return  MaterialApp(
+            debugShowCheckedModeBanner: false,
             title: 'Flutter Demo',
             themeMode: themChanger.themeMode,
             theme: ThemeData(
@@ -59,7 +64,7 @@ class MyApp extends StatelessWidget {
                 color: Colors.red,
               ),
             ),
-            home:ThemChangerScreen(),
+            home:LoginScreen(),
           );
         },
       )
