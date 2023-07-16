@@ -14,50 +14,44 @@ class FavouriteItemScreen extends StatefulWidget{
 class FavouriteItemScreenState extends State<FavouriteItemScreen>{
   @override
   Widget build(BuildContext context) {
+    var fav = context.watch<FavouriteItemProvider>().favList;
+    print(fav);
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        title: Text("Favourite Item"),
-        actions: [
-          InkWell(
-            onTap: (){
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context){
-                  return MyFavouriteItemScreen();
-                })
-              );
-            },
-            child: Icon(Icons.favorite),
-          ),
-          SizedBox(width: 20,),
-        ],
+        title: Text("Selected Item ${fav.length}"),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              itemCount: 100,
-                itemBuilder: (context,index){
-              return Consumer<FavouriteItemProvider>(
-                  builder: (context , value ,child) {
-                return ListTile(
-                  onTap: (){
-                    if(value.selectedItem.contains(index)){
-                      value.removeItem(index);
-                    }
-                    else{
-                      value.addItem(index);
-                    }
-                    print(value.selectedItem);
-                  },
-                  title: Text("Item$index"),
-                  trailing: Icon(value.selectedItem.contains(index) ? Icons.favorite : Icons.favorite_border_outlined),
-                );
-              });
+      body:  Padding(
+        padding: const EdgeInsets.only(top: 20,bottom: 20,left: 15,right:15),
+        child: ListView.builder(
+            itemCount: 40,
+            itemBuilder: (context , index) {
+              return ListTile(
+                title: Text("Item ${index}"),
+                trailing: InkWell(
+                    onTap: (){
+                      if(!fav.contains(index)){
+                        context.read<FavouriteItemProvider>().addToList(index);
+                        print(fav);
+                      }
+                      else{
+                        context.read<FavouriteItemProvider>().removeToList(index);
+                        print(fav);
+                      }
+                    },
+                    child: Icon(Icons.favorite , color: fav.contains(index) ? Colors.red : Colors.blueGrey ,)),
+              );
             }),
-          ),
-        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+          Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context){
+                return  MyFavouriteItemScreen();
+              })
+          );
+        },
       ),
     );
   }

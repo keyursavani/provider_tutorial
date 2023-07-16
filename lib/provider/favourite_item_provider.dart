@@ -2,17 +2,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
 class FavouriteItemProvider with ChangeNotifier{
-  List<int> _selectedItem = [];
+  List _favList = [];
 
-  List<int> get  selectedItem => _selectedItem;
+List get favList => _favList;
 
-  void addItem(int value){
-    _selectedItem.add(value);
+  void addToList(int index){
+    _favList.add(index);
     notifyListeners();
   }
 
-  void removeItem(int value){
-    _selectedItem.remove(value);
+  void removeToList(int index){
+    _favList.remove(index);
     notifyListeners();
   }
 }

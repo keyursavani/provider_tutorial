@@ -64,7 +64,7 @@ class MyApp extends StatelessWidget {
                 color: Colors.red,
               ),
             ),
-            home:LoginScreen(),
+            home:FavouriteItemScreen(),
           );
         },
       )

@@ -15,38 +15,24 @@ class MyFavouriteItemScreen extends StatefulWidget{
 class MyFavouriteItemScreenState extends State<MyFavouriteItemScreen>{
   @override
   Widget build(BuildContext context) {
-    var provider = Provider.of<FavouriteItemProvider>(context);
+    var fav = context.watch<FavouriteItemProvider>().favList;
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
         title: Text("Favourite Item"),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-                itemCount: provider.selectedItem.length,
-                itemBuilder: (context,index){
-                  return Consumer<FavouriteItemProvider>(
-                      builder: (context , value ,child) {
-                        return ListTile(
-                          onTap: (){
-                            if(value.selectedItem.contains(index)){
-                              value.removeItem(index);
-                            }
-                            else{
-                              value.addItem(index);
-                            }
-                            print(value.selectedItem);
-                          },
-                          title: Text("Item$index"),
-                          trailing: Icon(value.selectedItem.contains(index) ? Icons.favorite : Icons.favorite_border_outlined),
-                        );
-                      });
-                }),
-          ),
-        ],
-      ),
+      body: ListView.builder(
+          itemCount: fav.length,
+          itemBuilder: (context , index){
+            return ListTile(
+              title: Text("Item ${fav[index]}"),
+              trailing: TextButton(
+                onPressed: (){
+                  context.read<FavouriteItemProvider>().removeToList(fav[index]);
+                },
+                child: const Text("Remove" ,style: TextStyle(color: Colors.red),),),
+            );
+          }),
     );
   }
 }
